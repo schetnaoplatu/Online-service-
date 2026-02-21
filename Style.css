@@ -1,31 +1,34 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-    background: #f4f6f9;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    display: flex;
+    flex-direction: column;
 }
 
+/* HEADER */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
-    background: #1e293b;
-    color: white;
+    padding: 20px 50px;
 }
 
-header .logo {
-    font-size: 20px;
+.logo {
     font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 1px;
 }
 
 nav a {
-    color: white;
+    color: #cbd5e1;
     text-decoration: none;
     margin-left: 20px;
     transition: 0.3s;
@@ -35,85 +38,92 @@ nav a:hover {
     color: #38bdf8;
 }
 
+/* HERO */
 .hero {
     text-align: center;
-    padding: 60px 20px;
-    background: white;
+    padding: 60px 20px 30px;
 }
 
 .hero h1 {
-    font-size: 32px;
+    font-size: 36px;
     margin-bottom: 10px;
 }
 
+.hero p {
+    color: #94a3b8;
+}
+
+/* CARDS */
 .cards {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    padding: 40px;
-    flex-wrap: wrap;
+    padding: 40px 20px;
 }
 
 .card {
-    background: white;
-    padding: 20px;
-    width: 250px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    width: 350px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     text-align: center;
-    transition: 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card button {
-    margin-top: 10px;
-    padding: 8px 15px;
-    border: none;
-    background: #1e293b;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.card button:hover {
-    background: #334155;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #1e293b;
-    color: white;
-}
+/* INPUTS */
 .card input,
 .card select {
     width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
 }
 
+/* BUTTONS */
 .buttons {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
-.copy-btn {
+.card button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #38bdf8;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card button:hover {
     background: #0ea5e9;
 }
 
+.copy-btn {
+    background: #22c55e;
+}
+
 .copy-btn:hover {
-    background: #0284c7;
+    background: #16a34a;
 }
 
 .result-box {
-    margin-top: 15px;
+    margin-top: 20px;
+    font-size: 18px;
     font-weight: bold;
     opacity: 0;
     transition: 0.3s;
+}
+
+/* FOOTER */
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
 }
