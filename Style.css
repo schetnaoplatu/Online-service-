@@ -88,3 +88,32 @@ footer {
     background: #1e293b;
     color: white;
 }
+.card input,
+.card select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.copy-btn {
+    background: #0ea5e9;
+}
+
+.copy-btn:hover {
+    background: #0284c7;
+}
+
+.result-box {
+    margin-top: 15px;
+    font-weight: bold;
+    opacity: 0;
+    transition: 0.3s;
+}
