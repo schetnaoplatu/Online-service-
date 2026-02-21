@@ -36,24 +36,24 @@
     <button onclick="calculateNDS()">Рассчитать</button>
 
     <p id="result"></p>
+    <div class="card">
+    <h3>Калькулятор НДС (12%)</h3>
+
+    <input type="number" id="amount" placeholder="Введите сумму" />
+
+    <select id="ndsType">
+        <option value="add">Добавить 12%</option>
+        <option value="remove">Убрать 12%</option>
+    </select>
+
+    <div class="buttons">
+        <button onclick="calculateNDS()">Рассчитать</button>
+        <button onclick="copyResult()" class="copy-btn">Скопировать</button>
+    </div>
+
+    <p id="result" class="result-box"></p>
+</div>
     
-    <div class="card">
-        <h3>Калькулятор НДС</h3>
-        <p>Быстрый расчет налога</p>
-        <button onclick="alert('Раздел в разработке')">Открыть</button>
-    </div>
-
-    <div class="card">
-        <h3>Генератор PDF</h3>
-        <p>Создание документов онлайн</p>
-        <button onclick="alert('Раздел в разработке')">Открыть</button>
-    </div>
-
-    <div class="card">
-        <h3>Конвертер валют</h3>
-        <p>Перевод валют онлайн</p>
-        <button onclick="alert('Раздел в разработке')">Открыть</button>
-    </div>
 </section>
 
 <footer>
