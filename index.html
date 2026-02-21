@@ -23,7 +23,20 @@
     <p>Бесплатные инструменты для работы и документов</p>
 </section>
 
-<section class="cards">
+<div class="card">
+    <h3>Калькулятор НДС</h3>
+
+    <input type="number" id="amount" placeholder="Введите сумму" />
+
+    <select id="ndsType">
+        <option value="add">Добавить 12%</option>
+        <option value="remove">Убрать 12%</option>
+    </select>
+
+    <button onclick="calculateNDS()">Рассчитать</button>
+
+    <p id="result"></p>
+    
     <div class="card">
         <h3>Калькулятор НДС</h3>
         <p>Быстрый расчет налога</p>
