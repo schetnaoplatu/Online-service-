@@ -5,6 +5,7 @@ function calculateNDS() {
 
     if (isNaN(amount) || amount <= 0) {
         resultElement.innerText = "Введите корректную сумму!";
+        resultElement.style.opacity = "1";
         return;
     }
 
@@ -17,4 +18,22 @@ function calculateNDS() {
         result = amount / 1.12;
         resultElement.innerText = "Без НДС: " + result.toFixed(2) + " ₸";
     }
+
+    resultElement.style.opacity = "1";
 }
+
+function copyResult() {
+    let text = document.getElementById("result").innerText;
+
+    if (!text) return;
+
+    navigator.clipboard.writeText(text);
+    alert("Результат скопирован!");
+}
+
+// Авторасчёт при вводе
+document.addEventListener("input", function(e) {
+    if (e.target.id === "amount") {
+        calculateNDS();
+    }
+});
