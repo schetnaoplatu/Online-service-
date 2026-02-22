@@ -2,181 +2,213 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Онлайн генератор счета на оплату</title>
+<title>Онлайн генератор счета на оплату | Скачать PDF</title>
 
-<meta name="description" content="Бесплатный онлайн генератор счета на оплату. Создайте и скачайте счет в PDF за 1 минуту.">
+<meta name="description" content="Создайте счет на оплату онлайн бесплатно. Автоматический расчет, НДС 12%, скачивание PDF. Работает мгновенно.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    margin: 0;
-    padding: 20px;
+body{
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(135deg,#1e3c72,#2a5298);
+margin:0;
+padding:30px;
 }
-.container {
-    max-width: 1100px;
-    margin: auto;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+.container{
+max-width:1100px;
+margin:auto;
+background:#fff;
+padding:30px;
+border-radius:20px;
+box-shadow:0 20px 50px rgba(0,0,0,.2);
 }
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
+h1{
+text-align:center;
+margin-bottom:30px;
 }
-.section {
-    margin-bottom: 25px;
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
 }
-.section h2 {
-    margin-bottom: 10px;
-    font-size: 18px;
+input,textarea,select{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ddd;
+margin-bottom:10px;
 }
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
 }
-table {
-    width: 100%;
-    border-collapse: collapse;
+th,td{
+border:1px solid #eee;
+padding:10px;
+text-align:center;
 }
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
+button{
+padding:12px 18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-right:10px;
+font-weight:bold;
 }
-button {
-    padding: 12px 20px;
-    background: #007bff;
-    border: none;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
+.primary{background:#2a5298;color:#fff;}
+.danger{background:#d9534f;color:#fff;}
+.success{background:#28a745;color:#fff;}
+.total-box{
+text-align:right;
+margin-top:20px;
+font-size:18px;
 }
-button:hover {
-    background: #0056b3;
+.footer{
+text-align:center;
+margin-top:30px;
+color:#777;
 }
-.total {
-    text-align: right;
-    font-size: 20px;
-    margin-top: 15px;
-}
-.footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 14px;
-    color: #777;
+@media(max-width:800px){
+.grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 
 <body>
-<div class="container">
-<h1>Онлайн генератор счета на оплату</h1>
 
-<div class="section">
-<h2>Продавец</h2>
-<input id="seller" placeholder="Название компании / ФИО">
+<div class="container">
+
+<h1>Генератор счета на оплату</h1>
+
+<div class="grid">
+
+<div>
+<h3>Продавец</h3>
+<input id="sellerName" placeholder="Название / ФИО">
 <textarea id="sellerDetails" placeholder="Реквизиты продавца"></textarea>
 </div>
 
-<div class="section">
-<h2>Покупатель</h2>
-<input id="buyer" placeholder="Название компании / ФИО">
+<div>
+<h3>Покупатель</h3>
+<input id="buyerName" placeholder="Название / ФИО">
 <textarea id="buyerDetails" placeholder="Реквизиты покупателя"></textarea>
 </div>
 
-<div class="section">
-<h2>Товары / Услуги</h2>
+</div>
+
+<br>
+
+<label>Номер счета</label>
+<input id="invoiceNumber">
+
+<label>Дата</label>
+<input type="date" id="invoiceDate">
+
+<label>НДС</label>
+<select id="vatSelect">
+<option value="0">Без НДС</option>
+<option value="12">НДС 12%</option>
+</select>
+
 <table id="items">
 <tr>
 <th>Наименование</th>
 <th>Кол-во</th>
 <th>Цена</th>
 <th>Сумма</th>
-</tr>
-<tr>
-<td><input></td>
-<td><input type="number" value="1"></td>
-<td><input type="number" value="0"></td>
-<td class="sum">0</td>
+<th>Удалить</th>
 </tr>
 </table>
 
 <br>
-<button onclick="addRow()">➕ Добавить строку</button>
-</div>
+<button class="success" onclick="addRow()">➕ Добавить позицию</button>
 
-<div class="total">
-Итого: <span id="total">0</span> ₸
+<div class="total-box">
+<p>Сумма: <span id="subtotal">0</span> ₸</p>
+<p>НДС: <span id="vatAmount">0</span> ₸</p>
+<h3>ИТОГО: <span id="total">0</span> ₸</h3>
 </div>
 
 <br>
-<button onclick="generatePDF()">📄 Скачать PDF</button>
+<button class="primary" onclick="generatePDF()">📄 Скачать PDF</button>
+<button class="danger" onclick="window.print()">🖨 Печать</button>
 
 <div class="footer">
 © 2026 Онлайн сервис формирования счетов
 </div>
+
 </div>
 
 <script>
-function addRow() {
-    const table = document.getElementById("items");
-    const row = table.insertRow();
-    row.innerHTML = `
-        <td><input></td>
-        <td><input type="number" value="1"></td>
-        <td><input type="number" value="0"></td>
-        <td class="sum">0</td>
-    `;
+const today = new Date().toISOString().split("T")[0];
+invoiceDate.value = today;
+invoiceNumber.value = "INV-" + Math.floor(Math.random()*100000);
+
+function addRow(){
+const table = document.getElementById("items");
+const row = table.insertRow();
+row.innerHTML = `
+<td><input></td>
+<td><input type="number" value="1"></td>
+<td><input type="number" value="0"></td>
+<td class="sum">0</td>
+<td><button onclick="this.parentElement.parentElement.remove();calculate()">X</button></td>
+`;
 }
 
-document.addEventListener("input", () => {
-    let total = 0;
-    document.querySelectorAll("#items tr").forEach((row, i) => {
-        if (i === 0) return;
-        const qty = row.cells[1].querySelector("input").value;
-        const price = row.cells[2].querySelector("input").value;
-        const sum = qty * price;
-        row.cells[3].innerText = sum;
-        total += sum;
-    });
-    document.getElementById("total").innerText = total;
+document.addEventListener("input", calculate);
+
+function calculate(){
+let subtotal=0;
+document.querySelectorAll("#items tr").forEach((row,i)=>{
+if(i===0)return;
+const qty=row.cells[1].querySelector("input").value||0;
+const price=row.cells[2].querySelector("input").value||0;
+const sum=qty*price;
+row.cells[3].innerText=sum;
+subtotal+=sum;
 });
+let vatPercent=vatSelect.value;
+let vatAmount=subtotal*vatPercent/100;
+subtotalElem=subtotal;
+document.getElementById("subtotal").innerText=subtotal;
+document.getElementById("vatAmount").innerText=vatAmount;
+document.getElementById("total").innerText=subtotal+vatAmount;
+}
 
-function generatePDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+addRow();
 
-    doc.text("СЧЕТ НА ОПЛАТУ", 80, 10);
-    doc.text("Продавец: " + seller.value, 10, 20);
-    doc.text("Покупатель: " + buyer.value, 10, 30);
-
-    let y = 40;
-    doc.text("Товары:", 10, y);
-    y += 10;
-
-    document.querySelectorAll("#items tr").forEach((row, i) => {
-        if (i === 0) return;
-        const name = row.cells[0].querySelector("input").value;
-        const qty = row.cells[1].querySelector("input").value;
-        const price = row.cells[2].querySelector("input").value;
-        const sum = row.cells[3].innerText;
-        doc.text(`${name} | ${qty} x ${price} = ${sum}`, 10, y);
-        y += 8;
-    });
-
-    y += 10;
-    doc.text("Итого: " + total.innerText + " ₸", 10, y);
-
-    doc.save("schet.pdf");
+function generatePDF(){
+const {jsPDF}=window.jspdf;
+const doc=new jsPDF();
+let y=10;
+doc.text("СЧЕТ НА ОПЛАТУ",70,y);
+y+=10;
+doc.text("Номер: "+invoiceNumber.value,10,y);
+y+=8;
+doc.text("Дата: "+invoiceDate.value,10,y);
+y+=10;
+doc.text("Продавец: "+sellerName.value,10,y);
+y+=8;
+doc.text("Покупатель: "+buyerName.value,10,y);
+y+=10;
+document.querySelectorAll("#items tr").forEach((row,i)=>{
+if(i===0)return;
+const name=row.cells[0].querySelector("input").value;
+const qty=row.cells[1].querySelector("input").value;
+const price=row.cells[2].querySelector("input").value;
+const sum=row.cells[3].innerText;
+doc.text(`${name} ${qty} x ${price} = ${sum}`,10,y);
+y+=8;
+});
+y+=10;
+doc.text("ИТОГО: "+total.innerText+" ₸",10,y);
+doc.save("schet.pdf");
 }
 </script>
+
 </body>
 </html>
