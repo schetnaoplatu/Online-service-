@@ -1,63 +1,182 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Services</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Онлайн генератор счета на оплату</title>
+
+<meta name="description" content="Бесплатный онлайн генератор счета на оплату. Создайте и скачайте счет в PDF за 1 минуту.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.section {
+    margin-bottom: 25px;
+}
+.section h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+button {
+    padding: 12px 20px;
+    background: #007bff;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+button:hover {
+    background: #0056b3;
+}
+.total {
+    text-align: right;
+    font-size: 20px;
+    margin-top: 15px;
+}
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #777;
+}
+</style>
 </head>
+
 <body>
+<div class="container">
+<h1>Онлайн генератор счета на оплату</h1>
 
-<header>
-    <div class="logo">SERVICE ONLINE</div>
-    <nav>
-        <a href="#">Главная</a>
-        <a href="#">Документы</a>
-        <a href="#">Калькуляторы</a>
-        <a href="#">Контакты</a>
-    </nav>
-</header>
-
-<section class="hero">
-    <h1>Онлайн сервисы и инструменты</h1>
-    <p>Бесплатные инструменты для работы и документов</p>
-</section>
-
-<div class="card">   
-<input type="number" id="amount" placeholder="Введите сумму" />
-
-    <select id="ndsType">
-        <option value="add">Добавить 12%</option>
-        <option value="remove">Убрать 12%</option>
-    </select>
-
-    <button onclick="calculateNDS()">Рассчитать</button>
-
-    <p id="result"></p>
-    <div class="card">
-    <h3>Калькулятор НДС (12%)</h3>
-
-    <input type="number" id="amount" placeholder="Введите сумму" />
-
-    <select id="ndsType">
-        <option value="add">Добавить 12%</option>
-        <option value="remove">Убрать 12%</option>
-    </select>
-
-    <div class="buttons">
-        <button onclick="calculateNDS()">Рассчитать</button>
-        <button onclick="copyResult()" class="copy-btn">Скопировать</button>
-    </div>
-
-    <p id="result" class="result-box"></p>
+<div class="section">
+<h2>Продавец</h2>
+<input id="seller" placeholder="Название компании / ФИО">
+<textarea id="sellerDetails" placeholder="Реквизиты продавца"></textarea>
 </div>
-    
-</section>
 
-<footer>
-    © 2026 Online Services | Все права защищены
-</footer>
+<div class="section">
+<h2>Покупатель</h2>
+<input id="buyer" placeholder="Название компании / ФИО">
+<textarea id="buyerDetails" placeholder="Реквизиты покупателя"></textarea>
+</div>
 
-<script src="script.js"></script>
+<div class="section">
+<h2>Товары / Услуги</h2>
+<table id="items">
+<tr>
+<th>Наименование</th>
+<th>Кол-во</th>
+<th>Цена</th>
+<th>Сумма</th>
+</tr>
+<tr>
+<td><input></td>
+<td><input type="number" value="1"></td>
+<td><input type="number" value="0"></td>
+<td class="sum">0</td>
+</tr>
+</table>
+
+<br>
+<button onclick="addRow()">➕ Добавить строку</button>
+</div>
+
+<div class="total">
+Итого: <span id="total">0</span> ₸
+</div>
+
+<br>
+<button onclick="generatePDF()">📄 Скачать PDF</button>
+
+<div class="footer">
+© 2026 Онлайн сервис формирования счетов
+</div>
+</div>
+
+<script>
+function addRow() {
+    const table = document.getElementById("items");
+    const row = table.insertRow();
+    row.innerHTML = `
+        <td><input></td>
+        <td><input type="number" value="1"></td>
+        <td><input type="number" value="0"></td>
+        <td class="sum">0</td>
+    `;
+}
+
+document.addEventListener("input", () => {
+    let total = 0;
+    document.querySelectorAll("#items tr").forEach((row, i) => {
+        if (i === 0) return;
+        const qty = row.cells[1].querySelector("input").value;
+        const price = row.cells[2].querySelector("input").value;
+        const sum = qty * price;
+        row.cells[3].innerText = sum;
+        total += sum;
+    });
+    document.getElementById("total").innerText = total;
+});
+
+function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.text("СЧЕТ НА ОПЛАТУ", 80, 10);
+    doc.text("Продавец: " + seller.value, 10, 20);
+    doc.text("Покупатель: " + buyer.value, 10, 30);
+
+    let y = 40;
+    doc.text("Товары:", 10, y);
+    y += 10;
+
+    document.querySelectorAll("#items tr").forEach((row, i) => {
+        if (i === 0) return;
+        const name = row.cells[0].querySelector("input").value;
+        const qty = row.cells[1].querySelector("input").value;
+        const price = row.cells[2].querySelector("input").value;
+        const sum = row.cells[3].innerText;
+        doc.text(`${name} | ${qty} x ${price} = ${sum}`, 10, y);
+        y += 8;
+    });
+
+    y += 10;
+    doc.text("Итого: " + total.innerText + " ₸", 10, y);
+
+    doc.save("schet.pdf");
+}
+</script>
 </body>
 </html>
