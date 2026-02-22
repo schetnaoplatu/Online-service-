@@ -84,12 +84,29 @@ button:hover {opacity:.9;}
 <h2>Продавец</h2>
 <input id="seller" placeholder="Название / ФИО">
 <textarea id="sellerDetails" placeholder="Реквизиты продавца"></textarea>
+  <div class="section">
+<h2>Продавец</h2>
+<input id="seller" placeholder="Название / ФИО">
+<textarea id="sellerDetails" placeholder="Реквизиты продавца"></textarea>
+
+<!-- Новые поля для Казахстана -->
+<input id="sellerBin" placeholder="БИН / ИИН">
+<input id="sellerBank" placeholder="Банк">
+<input id="sellerBik" placeholder="БИК">
+<input id="sellerIik" placeholder="ИИК">
+<input id="sellerKbe" placeholder="КБе">
 </div>
 
 <div class="section">
 <h2>Покупатель</h2>
 <input id="buyer" placeholder="Название / ФИО">
 <textarea id="buyerDetails" placeholder="Реквизиты покупателя"></textarea>
+<input id="sellerBin" placeholder="БИН / ИИН">
+<input id="sellerBank" placeholder="Банк">
+<input id="sellerBik" placeholder="БИК">
+<input id="sellerIik" placeholder="ИИК">
+<input id="sellerKbe" placeholder="КБе">
+</div>
 </div>
 
 <div class="section">
@@ -120,7 +137,6 @@ button:hover {opacity:.9;}
 
 <br>
 <button onclick="generatePDF()">📄 Скачать PDF</button>
-
 <div class="footer">
 © 2026 Онлайн сервис формирования счетов
 </div>
