@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://schetnaoplatu.github.io/Online-service-/sitemap.xml
