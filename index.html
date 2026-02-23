@@ -198,32 +198,40 @@ function calc(){
 const totalSpan = total;
 const vatSpan = vat;
 
-function generatePDF(){
-  const {jsPDF} = window.jspdf;
+<script>
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  doc.text(`СЧЕТ НА ОПЛАТУ ${invoiceNumber.value}`, 60, 10);
-  doc.text(`Дата: ${invoiceDate.value}`, 150, 10);
+  doc.setFontSize(14);
+  doc.text(`СЧЕТ НА ОПЛАТУ № ${invoiceNumber.value}`, 10, 15);
+  doc.text(`Дата: ${invoiceDate.value}`, 150, 15);
 
-  doc.text("Продавец:", 10, 25);
-  doc.text(seller.value, 10, 32);
-  doc.text(sellerDetails.value, 10, 38);
+  doc.setFontSize(12);
+  doc.text("Продавец:", 10, 30);
+  doc.text(seller.value || "-", 10, 38);
+  doc.text(sellerDetails.value || "-", 10, 46);
 
-  doc.text("Покупатель:", 10, 50);
-  doc.text(buyer.value, 10, 57);
-  doc.text(buyerDetails.value, 10, 63);
+  doc.text("Покупатель:", 10, 60);
+  doc.text(buyer.value || "-", 10, 68);
+  doc.text(buyerDetails.value || "-", 10, 76);
 
-  let y = 75;
-  document.querySelectorAll("#items tr").forEach((r,i)=>{
-    if(i===0) return;
-    const n=r.cells[0].querySelector("input").value;
-    const q=r.cells[1].querySelector("input").value;
-    const p=r.cells[2].querySelector("input").value;
-    doc.text(`${n} — ${q} x ${p}`, 10, y);
-    y+=8;
+  let y = 95;
+  document.querySelectorAll("#items tr").forEach((row, i) => {
+    if (i === 0) return;
+    const n = row.cells[0].querySelector("input").value;
+    const q = row.cells[1].querySelector("input").value;
+    const p = row.cells[2].querySelector("input").value;
+    if (n)
+      doc.text(`${n} — ${q} x ${p} ₸`, 10, y),
+      y += 8;
   });
-  doc.text(`Итого: ${grandTotal.innerText} ₸`, 10, y+10);
-  doc.save("schet.pdf");
+
+  doc.text(`Итого: ${grandTotal.innerText} ₸`, 10, y + 10);
+
+  doc.save("schet-na-oplatu.pdf");
+}
+</script>
 }
 </script>
 </body>
