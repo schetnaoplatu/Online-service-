@@ -149,6 +149,51 @@ button:hover {opacity:.9;}
 <br>
 <button onclick="generatePDF()">📄 Скачать PDF</button>
 <div class="footer">
+  <script>
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(14);
+  doc.text(`СЧЕТ НА ОПЛАТУ № ${invoiceNumber.value}`, 10, 15);
+  doc.text(`Дата: ${invoiceDate.value}`, 150, 15);
+
+  doc.setFontSize(12);
+  doc.text("Продавец:", 10, 30);
+  doc.text(seller.value || "-", 10, 38);
+  doc.text(sellerDetails.value || "-", 10, 46);
+
+  doc.text("Покупатель:", 10, 60);
+  doc.text(buyer.value || "-", 10, 68);
+  doc.text(buyerDetails.value || "-", 10, 76);
+
+  let y = 95;
+  document.querySelectorAll("#items tr").forEach((row, i) => {
+    if (i === 0) return;
+    const n = row.cells[0].querySelector("input").value;
+    const q = row.cells[1].querySelector("input").value;
+    const p = row.cells[2].querySelector("input").value;
+    if (n)
+      doc.text(`${n} — ${q} x ${p} ₸`, 10, y),
+      y += 8;
+  });
+
+  doc.text(`Итого: ${grandTotal.innerText} ₸`, 10, y + 10);
+
+  doc.save("schet-na-oplatu.pdf");
+}
+</script>
+}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.text("Счет на оплату", 10, 10);
+  doc.save("test.pdf");
+}
+</script>
   <a href="contacts.html">Контакты</a>
   <a href="privacy.html">Политика конфиденциальности</a>
   © 2026 Онлайн сервис формирования счетов
@@ -198,41 +243,6 @@ function calc(){
 const totalSpan = total;
 const vatSpan = vat;
 
-<script>
-function generatePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  doc.setFontSize(14);
-  doc.text(`СЧЕТ НА ОПЛАТУ № ${invoiceNumber.value}`, 10, 15);
-  doc.text(`Дата: ${invoiceDate.value}`, 150, 15);
-
-  doc.setFontSize(12);
-  doc.text("Продавец:", 10, 30);
-  doc.text(seller.value || "-", 10, 38);
-  doc.text(sellerDetails.value || "-", 10, 46);
-
-  doc.text("Покупатель:", 10, 60);
-  doc.text(buyer.value || "-", 10, 68);
-  doc.text(buyerDetails.value || "-", 10, 76);
-
-  let y = 95;
-  document.querySelectorAll("#items tr").forEach((row, i) => {
-    if (i === 0) return;
-    const n = row.cells[0].querySelector("input").value;
-    const q = row.cells[1].querySelector("input").value;
-    const p = row.cells[2].querySelector("input").value;
-    if (n)
-      doc.text(`${n} — ${q} x ${p} ₸`, 10, y),
-      y += 8;
-  });
-
-  doc.text(`Итого: ${grandTotal.innerText} ₸`, 10, y + 10);
-
-  doc.save("schet-na-oplatu.pdf");
-}
-</script>
-}
 </script>
 </body>
 </html>
