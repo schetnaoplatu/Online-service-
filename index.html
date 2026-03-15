@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -30,7 +29,7 @@
         th { background: #f8fafc; padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-size: 13px; }
         td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
 
-        .btn { cursor: pointer; border: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
+        .btn { cursor: pointer; border: none; border-radius: 8px; font-weight: 600; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
         .btn-add { background: #f1f5f9; color: var(--dark); padding: 8px 15px; }
         .btn-add:hover { background: #e2e8f0; }
         .btn-main { background: var(--primary); color: white; width: 100%; padding: 18px; font-size: 18px; margin-top: 20px; }
@@ -40,7 +39,6 @@
         .total-box { text-align: right; margin-top: 20px; padding: 20px; background: #f8fafc; border-radius: 12px; }
         .total-box strong { font-size: 24px; color: var(--primary); }
 
-        /* Виджеты инструментов */
         .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
         .tool-card { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
         .tool-card h3 { margin-top: 0; font-size: 16px; }
@@ -48,13 +46,15 @@
         .check-links a { display: block; color: var(--primary); text-decoration: none; margin-bottom: 8px; font-size: 14px; }
         .check-links a:hover { text-decoration: underline; }
 
+        /* Настройки печати */
         @media print {
-            .btn, .tools-grid, header, .subtitle, label, .btn-remove, .section h2 { display: none !important; }
+            .btn, .tools-grid, header, .subtitle, label, .btn-remove, .section h2, .no-print { display: none !important; }
             body { background: white; padding: 0; }
-            .main-card { box-shadow: none; padding: 0; }
+            .main-card { box-shadow: none; padding: 0; margin: 0; }
             .section { border: none; padding: 0; margin-bottom: 20px; }
-            input, textarea { border: none !important; padding: 2px 0 !important; }
+            input, textarea { border: none !important; padding: 2px 0 !important; background: transparent !important; }
             .grid { gap: 5px; }
+            .container { max-width: 100%; margin: 0; padding: 0; }
         }
 
         @media (max-width: 600px) { .grid, .tools-grid { grid-template-columns: 1fr; } }
@@ -108,101 +108,96 @@
                         <th width="80">Кол-во</th>
                         <th width="120">Цена</th>
                         <th width="120">Сумма</th>
-                        <th></th>
+                        <th class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody id="itemsBody"></tbody>
             </table>
-            <button class="btn btn-add" onclick="addRow()">+ Добавить позицию</button>
+            <button class="btn btn-add no-print" onclick="addRow()">+ Добавить позицию</button>
         </div>
 
-        <div style="margin: 20px 0;">
+        <div class="no-print" style="margin: 20px 0;">
             <label style="cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 10px;">
                 <input type="checkbox" id="vatCheck" style="width: auto;" onchange="calc()"> Добавить НДС (16% РК / 20% РФ)
             </label>
         </div>
 
-       <div class="total-box">
-    <div>Сумма: <span id="baseSum">0</span> ₸/₽</div>
-    <div>НДС: <span id="vatSum">0</span> ₸/₽</div>
-    <div style="margin-top: 10px;"><strong>Итого к оплате: <span id="grandTotal">0</span> ₸/₽</strong></div>
-    
-    <div style="font-style: italic; font-size: 13px; color: #64748b; margin-top: 10px; text-align: right;" id="sumWordsBlock">
-        Сумма прописью: <span id="sumWords">ноль тенге 00 тиын</span>
-    </div>
-
-   <button onclick="copyToWhatsApp()" class="btn no-print" style="margin-top: 15px; background: #25d366; color: white; padding: 10px 20px; font-size: 14px;">
-        🟢 Копировать для WhatsApp
-    </button>
-</div> <button onclick="window.print()" class="btn btn-main no-print" style="margin-bottom: 30px;">
-    🖨️ Скачать счет в PDF / Печать
-</button>
-
-<div class="tools-grid"> ```
-        <div class="tool-card">
-            <h3>📊 Быстрый расчет налога</h3>
-            <select id="taxRegion" onchange="calcTax()">
-                <option value="0.03">🇰🇿 Казахстан (Упрощенка 3%)</option>
-                <option value="0.06">🇷🇺 Россия (УСН Доходы 6%)</option>
-            </select>
-            <input type="number" id="revenue" placeholder="Сумма дохода" oninput="calcTax()">
-            <p>Налог к уплате: <strong id="taxRes">0</strong></p>
+        <div class="total-box">
+            <div>Сумма: <span id="baseSum">0</span> ₸/₽</div>
+            <div>НДС: <span id="vatSum">0</span> ₸/₽</div>
+            <div style="margin-top: 10px;"><strong>Итого к оплате: <span id="grandTotal">0</span> ₸/₽</strong></div>
+            <div style="font-style: italic; font-size: 13px; color: #64748b; margin-top: 10px; text-align: right;" id="sumWordsBlock">
+                Сумма прописью: <span id="sumWords">Ноль тенге 00 тиын</span>
+            </div>
+            <button onclick="copyToWhatsApp()" class="btn no-print" style="margin-top: 15px; background: #25d366; color: white; padding: 10px 20px; font-size: 14px;">
+                🟢 Копировать для WhatsApp
+            </button>
         </div>
 
-        <div class="tool-card">
-            <h3>🔍 Проверка партнеров</h3>
-            <div class="check-links">
-                <a href="https://kgd.gov.kz/ru/services/taxpayer_search" target="_blank">🇰🇿 Поиск налогоплательщиков РК</a>
-                <a href="https://pb.nalog.ru/" target="_blank">🇷🇺 Прозрачный бизнес РФ (ФНС)</a>
-                <a href="https://stat.gov.kz/ru/juridical/search/" target="_blank">🇰🇿 Поиск компаний по БИН</a>
+        <button onclick="window.print()" class="btn btn-main no-print" style="margin-bottom: 30px;">
+            🖨️ Скачать счет в PDF / Печать
+        </button>
+
+        <div class="tools-grid no-print">
+            <div class="tool-card">
+                <h3>📊 Быстрый расчет налога</h3>
+                <select id="taxRegion" onchange="calcTax()">
+                    <option value="0.03">🇰🇿 Казахстан (Упрощенка 3%)</option>
+                    <option value="0.06">🇷🇺 Россия (УСН Доходы 6%)</option>
+                </select>
+                <input type="number" id="revenue" placeholder="Сумма дохода" oninput="calcTax()">
+                <p>Налог к уплате: <strong id="taxRes">0</strong></p>
+            </div>
+            <div class="tool-card">
+                <h3>🔍 Проверка партнеров</h3>
+                <div class="check-links">
+                    <a href="https://kgd.gov.kz/ru/services/taxpayer_search" target="_blank">🇰🇿 Поиск налогоплательщиков РК</a>
+                    <a href="https://pb.nalog.ru/" target="_blank">🇷🇺 Прозрачный бизнес РФ (ФНС)</a>
+                    <a href="https://stat.gov.kz/ru/juridical/search/" target="_blank">🇰🇿 Поиск компаний по БИН</a>
+                </div>
             </div>
         </div>
-    </div>
-<div class="section" style="margin-top: 40px; background: #fff;">
-    <h2 style="color: #1e293b; border-bottom: 2px solid var(--primary); display: inline-block;">📚 Полезно знать предпринимателю</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
-        
-        <div style="padding: 10px; border-left: 3px solid #cbd5e1;">
-            <a href="blog/article5.html" style="text-decoration: none; color: var(--primary); font-weight: bold; display: block; margin-bottom: 5px;">
-                Как выставить счет ИП в Казахстане 2026
-            </a>
-            <p style="font-size: 13px; color: #64748b; margin: 0;">Разбираем обязательные реквизиты: БИН, ИИК и КБе.</p>
+
+        <div class="section no-print" style="margin-top: 40px; background: #fff;">
+            <h2 style="color: #1e293b; border-bottom: 2px solid var(--primary); display: inline-block;">📚 Полезно знать предпринимателю</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                <div style="padding: 10px; border-left: 3px solid #cbd5e1;">
+                    <a href="blog/article5.html" style="text-decoration: none; color: var(--primary); font-weight: bold; display: block; margin-bottom: 5px;">
+                        Как выставить счет ИП в Казахстане 2026
+                    </a>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">Разбираем обязательные реквизиты: БИН, ИИК и КБе.</p>
+                </div>
+                <div style="padding: 10px; border-left: 3px solid #cbd5e1;">
+                    <a href="blog/article1.html" style="text-decoration: none; color: var(--primary); font-weight: bold; display: block; margin-bottom: 5px;">
+                        Образец счета на оплату для РФ
+                    </a>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">Какие данные нужны для работы с российскими контрагентами.</p>
+                </div>
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <a href="blog.html" style="font-size: 14px; color: #64748b;">Посмотреть все статьи →</a>
+            </div>
         </div>
 
-        <div style="padding: 10px; border-left: 3px solid #cbd5e1;">
-            <a href="blog/article1.html" style="text-decoration: none; color: var(--primary); font-weight: bold; display: block; margin-bottom: 5px;">
-                Образец счета на оплату для РФ
-            </a>
-            <p style="font-size: 13px; color: #64748b; margin: 0;">Какие данные нужны для работы с российскими контрагентами.</p>
-        </div>
-
-    </div>
-    <div style="margin-top: 20px; text-align: center;">
-        <a href="blog.html" style="font-size: 14px; color: #64748b;">Посмотреть все статьи →</a>
-    </div>
-</div>
         <div class="section no-print" style="margin-top: 30px; text-align: center; border: 2px dashed #e2e8f0; background: #fff; padding: 30px; border-radius: 12px;">
-    <h3 style="margin-top: 0; color: #1e293b; font-size: 18px;">📁 Нужен пустой бланк или шаблон?</h3>
-    <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">
-        Если вам удобнее заполнять данные вручную, скачайте готовые формы документов 2026 года:
-    </p>
-    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <a href="#" style="text-decoration: none; color: #2563eb; background: #eff6ff; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid #dbeafe;">
-            📄 Шаблон Word (РК)
-        </a>
-        <a href="#" style="text-decoration: none; color: #16a34a; background: #f0fdf4; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid #dcfce7;">
-            📊 Бланк Excel (РФ)
-        </a>
+            <h3 style="margin-top: 0; color: #1e293b; font-size: 18px;">📁 Нужен пустой бланк или шаблон?</h3>
+            <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">
+                Если вам удобнее заполнять данные вручную, скачайте готовые формы документов 2026 года:
+            </p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="#" class="btn" style="color: #2563eb; background: #eff6ff; padding: 10px 20px; border: 1px solid #dbeafe;">📄 Шаблон Word (РК)</a>
+                <a href="#" class="btn" style="color: #16a34a; background: #f0fdf4; padding: 10px 20px; border: 1px solid #dcfce7;">📊 Бланк Excel (РФ)</a>
+            </div>
+        </div>
+
+        <footer class="no-print" style="text-align: center; margin-top: 50px; color: #64748b; padding-bottom: 30px;">
+            <p>© 2026 Бесплатный сервис «Счет на оплату». Все права защищены.</p>
+            <a href="../index.html" style="color: var(--primary); text-decoration: none;">На главную страницу портала</a>
+        </footer>
     </div>
-    <p style="font-size: 12px; color: #94a3b8; margin-top: 15px;">
-        * Все шаблоны соответствуют актуальным требованиям налогового законодательства.
-    </p>
 </div>
-    <footer style="text-align: center; margin-top: 50px; color: #64748b; padding-bottom: 30px;">
-        <p>© 2026 Бесплатный сервис «Счет на оплату». Все права защищены.</p>
-        <a href="../index.html" style="color: var(--primary); text-decoration: none;">На главную страницу портала</a>
-   </footer>
-</div> <script>
+
+<script>
     // 1. Инициализация номера и даты
     let count = localStorage.getItem("inv_idx") || 1000;
     count++;
@@ -210,7 +205,7 @@
     document.getElementById("invNum").value = "Счет № " + count;
     document.getElementById("invDate").valueAsDate = new Date();
 
-    // 2. Добавление строк в таблицу
+    // 2. Добавление строк
     function addRow() {
         const row = document.getElementById("itemsBody").insertRow();
         row.innerHTML = `
@@ -218,12 +213,12 @@
             <td><input type="number" value="1" oninput="calc()"></td>
             <td><input type="number" value="0" oninput="calc()"></td>
             <td class="row-sum">0</td>
-            <td><button class="btn btn-remove" onclick="this.closest('tr').remove();calc()">×</button></td>
+            <td class="no-print"><button class="btn btn-remove" onclick="this.closest('tr').remove();calc()">×</button></td>
         `;
     }
     addRow();
 
-    // 3. Функция расчета (calc)
+    // 3. Функция расчета
     function calc() {
         let total = 0;
         document.querySelectorAll("#itemsBody tr").forEach(row => {
@@ -242,18 +237,19 @@
         const finalAmount = total + vat;
         document.getElementById("grandTotal").innerText = finalAmount.toLocaleString();
 
-        // Обновление суммы прописью
         const words = numberToWords(finalAmount);
         document.getElementById('sumWords').innerText = words + " тенге (рублей) 00 тиын (копеек)";
     }
 
-    // 4. Перевод числа в слова
+    // 4. Число прописью
     function numberToWords(n) {
         const units = ['', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'];
         const teens = ['десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'];
         const tens = ['', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'];
         const hundreds = ['', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'];
-        if (n === 0) return 'ноль';
+        
+        if (n === 0) return 'Ноль';
+        
         function generate(num) {
             let parts = [];
             if (num >= 100) { parts.push(hundreds[Math.floor(num / 100)]); num %= 100; }
@@ -264,11 +260,12 @@
             }
             return parts.join(' ');
         }
+        
         let result = generate(Math.floor(n));
         return result.charAt(0).toUpperCase() + result.slice(1);
     }
 
-    // 5. Копирование в WhatsApp
+    // 5. WhatsApp
     function copyToWhatsApp() {
         const sName = document.getElementById('sName').value || "ИП/ТОО";
         const sBin = document.getElementById('sBin').value || "-";
@@ -278,7 +275,7 @@
         navigator.clipboard.writeText(text).then(() => { alert("Данные для WhatsApp скопированы!"); });
     }
 
-    // 6. Расчет налогов
+    // 6. Налог
     function calcTax() {
         const rev = document.getElementById("revenue").value || 0;
         const rate = document.getElementById("taxRegion").value;
