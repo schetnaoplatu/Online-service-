@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /blog/
+Disallow: /Scrip.js
+Disallow: /Style.css
+
 Sitemap: https://schetnaoplatu.github.io/Online-service-/sitemap.xml
