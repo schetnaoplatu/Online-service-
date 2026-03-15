@@ -154,6 +154,24 @@
     <footer style="text-align: center; margin-top: 50px; color: #64748b; padding-bottom: 30px;">
         <p>© 2026 Бесплатный сервис «Счет на оплату». Все права защищены.</p>
         <a href="../index.html" style="color: var(--primary); text-decoration: none;">На главную страницу портала</a>
+        // Добавь это в блок <script> твоего нового index.html
+async function getRates() {
+    try {
+        // Используем бесплатное API для примера (курсы к USD)
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const data = await response.json();
+        const kzt = data.rates.KZT;
+        const rub = data.rates.RUB;
+
+        const rateHtml = `
+            <div style="font-size: 14px; margin-top: 10px; border-top: 1px solid #eee; pt: 10px;">
+                💵 1$ = ${kzt.toFixed(2)} ₸ | 1$ = ${rub.toFixed(2)} ₽
+            </div>
+        `;
+        document.querySelector('.tool-card h3').insertAdjacentHTML('afterend', rateHtml);
+    } catch (e) { console.log("Ошибка курсов"); }
+}
+getRates();
     </footer>
 </div>
 
