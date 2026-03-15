@@ -122,14 +122,19 @@
             </label>
         </div>
 
-        <div class="total-box">
-            <div>Сумма: <span id="baseSum">0</span> ₸/₽</div>
-            <div>НДС: <span id="vatSum">0</span> ₸/₽</div>
-            <div style="margin-top: 10px;"><strong>Итого к оплате: <span id="grandTotal">0</span> ₸/₽</strong></div>
-        </div>
-
-        <button class="btn btn-main" onclick="window.print()">🖨️ Скачать счет в PDF / Печать</button>
+       <div class="total-box">
+    <div>Сумма: <span id="baseSum">0</span> ₸/₽</div>
+    <div>НДС: <span id="vatSum">0</span> ₸/₽</div>
+    <div style="margin-top: 10px;"><strong>Итого к оплате: <span id="grandTotal">0</span> ₸/₽</strong></div>
+    
+    <div style="font-style: italic; font-size: 13px; color: #64748b; margin-top: 10px; text-align: right;" id="sumWordsBlock">
+        Сумма прописью: <span id="sumWords">ноль тенге 00 тиын</span>
     </div>
+
+    <button onclick="copyToWhatsApp()" class="btn no-print" style="margin-top: 15px; background: #25d366; color: white; padding: 10px 20px; font-size: 14px;">
+        🟢 Копировать для WhatsApp
+    </button>
+</div>
 
     <div class="tools-grid">
         <div class="tool-card">
@@ -180,69 +185,43 @@
     </footer>
 </div>
 
-<script>
-    // 1. Твой старый код (номер счета, дата и расчеты)
-    let count = localStorage.getItem("inv_idx") || 1000;
-    count++;
-    localStorage.setItem("inv_idx", count);
-    document.getElementById("invNum").value = "Счет № " + count;
-    document.getElementById("invDate").valueAsDate = new Date();
+// Функция перевода суммы в текст
+function numberToWords(n) {
+    const units = ['', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'];
+    const teens = ['десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'];
+    const tens = ['', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'];
+    const hundreds = ['', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'];
 
-    function addRow() {
-        const row = document.getElementById("itemsBody").insertRow();
-        row.innerHTML = `
-            <td><input placeholder="Описание услуги"></td>
-            <td><input type="number" value="1" oninput="calc()"></td>
-            <td><input type="number" value="0" oninput="calc()"></td>
-            <td class="row-sum">0</td>
-            <td><button class="btn btn-remove" onclick="this.closest('tr').remove();calc()">×</button></td>
-        `;
-    }
-    addRow();
-
-    function calc() {
-        let total = 0;
-        document.querySelectorAll("#itemsBody tr").forEach(row => {
-            const q = parseFloat(row.cells[1].querySelector("input").value) || 0;
-            const p = parseFloat(row.cells[2].querySelector("input").value) || 0;
-            const s = q * p;
-            row.cells[3].innerText = s.toLocaleString();
-            total += s;
-        });
-        let vat = document.getElementById("vatCheck").checked ? (total * 0.12) : 0;
-        document.getElementById("baseSum").innerText = total.toLocaleString();
-        document.getElementById("vatSum").innerText = vat.toLocaleString();
-        document.getElementById("grandTotal").innerText = (total + vat).toLocaleString();
+    if (n === 0) return 'ноль';
+    
+    function generate(num) {
+        let parts = [];
+        if (num >= 100) { parts.push(hundreds[Math.floor(num / 100)]); num %= 100; }
+        if (num >= 10 && num <= 19) { parts.push(teens[num - 10]); }
+        else {
+            if (num >= 20) { parts.push(tens[Math.floor(num / 10)]); num %= 10; }
+            if (num > 0) { parts.push(units[num]); }
+        }
+        return parts.join(' ');
     }
 
-    function calcTax() {
-        const rev = document.getElementById("revenue").value || 0;
-        const rate = document.getElementById("taxRegion").value;
-        const res = rev * rate;
-        document.getElementById("taxRes").innerText = res.toLocaleString() + (rate == "0.03" ? " ₸" : " ₽");
-    }
+    let result = generate(Math.floor(n));
+    return result.charAt(0).toUpperCase() + result.slice(1);
+}
 
-    // --- ВОТ СЮДА МЫ ДОБАВИЛИ НОВЫЙ КОД КУРСОВ ---
-    async function getRates() {
-        try {
-            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            const data = await response.json();
-            const kzt = data.rates.KZT;
-            const rub = data.rates.RUB;
-            
-            const rateHtml = `
-                <div style="font-size: 14px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
-                    💵 1$ = ${kzt.toFixed(2)} ₸ | 1$ = ${rub.toFixed(2)} ₽
-                </div>
-            `;
-            // Ищем заголовок в карточке налогов и вставляем курс под него
-            document.querySelector('.tool-card h3').insertAdjacentHTML('afterend', rateHtml);
-        } catch (e) { console.log("Ошибка курсов"); }
-    }
-    getRates();
-    // --------------------------------------------
-
-</script>
+// Функция для WhatsApp
+function copyToWhatsApp() {
+    const sName = document.getElementById('sName').value || "ИП/ТОО";
+    const sBin = document.getElementById('sBin').value || "-";
+    const sIik = document.getElementById('sIik').value || "-";
+    const total = document.getElementById('grandTotal').innerText;
+    
+    const text = `📄 Реквизиты для оплаты:\n━━━━━━━━━━━━━━━\nОрганизация: ${sName}\nБИН/ИИН: ${sBin}\nСчет (IBAN): ${sIik}\nК оплате: ${total} ₸/₽\n━━━━━━━━━━━━━━━\nСгенерировано на сайте: ${window.location.href}`;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Данные для WhatsApp скопированы!");
+    });
+}
 
 </body>
 </html>
