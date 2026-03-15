@@ -1,248 +1,207 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Онлайн генератор счета на оплату — бесплатно PDF</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор счета на оплату онлайн 2026 — Бесплатно PDF (Казахстан и РФ)</title>
+    <meta name="description" content="Бесплатный сервис создания счетов на оплату. Онлайн генератор счета в PDF для ИП и ТОО. Актуальные реквизиты РК и РФ, расчет налогов и проверка БИН.">
+    <meta name="keywords" content="счет на оплату онлайн казахстан, генератор счета рф, выставить счет ип бесплатно, расчет налогов упрощенка">
+    
+    <style>
+        :root { --primary: #2563eb; --secondary: #10b981; --dark: #1e293b; --bg: #f8fafc; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--dark); margin: 0; padding: 0; }
+        
+        header { background: white; border-bottom: 1px solid #e2e8f0; padding: 20px 0; text-align: center; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        
+        .main-card { background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 40px; margin-bottom: 30px; }
+        h1 { font-size: 28px; margin-bottom: 10px; color: #0f172a; }
+        .subtitle { color: #64748b; margin-bottom: 30px; }
 
-<meta name="description" content="Создайте счет на оплату онлайн за 1 минуту. Бесплатно. Скачивание в PDF. Без регистрации.">
-<meta name="keywords" content="счет на оплату онлайн, генератор счета pdf, счет бесплатно">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="canonical" href="https://schetnaoplatu.github.io/Online-service-/">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #f1f5f9; border-radius: 12px; }
+        .section h2 { font-size: 18px; margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th { background: #f8fafc; padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-size: 13px; }
+        td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
 
-<style>
-:root {
-  --main:#2563eb;
-  --bg:#f1f5f9;
-}
-body {
-  margin:0;
-  font-family: Inter, Arial, sans-serif;
-  background:var(--bg);
-}
-.container {
-  max-width:1200px;
-  margin:auto;
-  background:#fff;
-  padding:30px;
-  border-radius:14px;
-  box-shadow:0 20px 40px rgba(0,0,0,.08);
-}
-h1 {text-align:center;margin-bottom:30px;}
-.section {margin-bottom:25px;}
-.section h2 {font-size:18px;margin-bottom:10px;}
-input, textarea {
-  width:100%;
-  padding:10px;
-  margin-bottom:10px;
-  border-radius:8px;
-  border:1px solid #cbd5e1;
-}
-table {
-  width:100%;
-  border-collapse:collapse;
-}
-th, td {
-  border:1px solid #e2e8f0;
-  padding:10px;
-  text-align:center;
-}
-button {
-  background:var(--main);
-  color:white;
-  border:none;
-  padding:12px 20px;
-  border-radius:8px;
-  cursor:pointer;
-}
-button:hover {opacity:.9;}
-.remove {background:#ef4444;}
-.total {
-  text-align:right;
-  font-size:18px;
-}
-  <section style="margin-top:40px">
-  <h2>Полезные статьи</h2>
-  <ul>
-    <li><a href="blog/article1.html">Как выставить счет ИП в Казахстане</a></li>
-    <li><a href="blog/article2.html">Счет на оплату образец 2026</a></li>
-    <li><a href="blog/article3.html">Как выставить счет без 1С</a></li>
-    <li><a href="blog/article4.html">Генератор счета онлайн бесплатно</a></li>
-    <li><a href="blog/article5.html">Счет с НДС пример 16%</a></li>
-  </ul>
-</section>
-.footer {
-  text-align:center;
-  color:#64748b;
-  margin-top:30px;
-}
-  <a href="about.html">О сервисе</a>
-</style>
+        .btn { cursor: pointer; border: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
+        .btn-add { background: #f1f5f9; color: var(--dark); padding: 8px 15px; }
+        .btn-add:hover { background: #e2e8f0; }
+        .btn-main { background: var(--primary); color: white; width: 100%; padding: 18px; font-size: 18px; margin-top: 20px; }
+        .btn-main:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-remove { background: #fee2e2; color: #ef4444; width: 30px; height: 30px; border-radius: 50%; }
+
+        .total-box { text-align: right; margin-top: 20px; padding: 20px; background: #f8fafc; border-radius: 12px; }
+        .total-box strong { font-size: 24px; color: var(--primary); }
+
+        /* Виджеты инструментов */
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+        .tool-card { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .tool-card h3 { margin-top: 0; font-size: 16px; }
+
+        .check-links a { display: block; color: var(--primary); text-decoration: none; margin-bottom: 8px; font-size: 14px; }
+        .check-links a:hover { text-decoration: underline; }
+
+        @media print {
+            .btn, .tools-grid, header, .subtitle, label, .btn-remove, .section h2 { display: none !important; }
+            body { background: white; padding: 0; }
+            .main-card { box-shadow: none; padding: 0; }
+            .section { border: none; padding: 0; margin-bottom: 20px; }
+            input, textarea { border: none !important; padding: 2px 0 !important; }
+            .grid { gap: 5px; }
+        }
+
+        @media (max-width: 600px) { .grid, .tools-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
-
 <body>
+
+<header>
+    <h1>Генератор счета на оплату</h1>
+    <div class="subtitle">Быстрое создание профессиональных счетов для РК и РФ</div>
+</header>
+
 <div class="container">
-<h1>Онлайн генератор счета на оплату</h1>
+    <div class="main-card">
+        <div class="section">
+            <h2>📄 Данные документа</h2>
+            <div class="grid">
+                <input id="invNum" placeholder="Номер счета (напр. № 1066)">
+                <input id="invDate" type="date">
+            </div>
+        </div>
 
-<div class="section">
-<h2>Счёт</h2>
-<input id="invoiceNumber" readonly>
-<input id="invoiceDate" type="date">
-</div>
+        <div class="section">
+            <h2>🏢 Реквизиты Продавца</h2>
+            <input id="sName" placeholder="Наименование организации или ФИО ИП">
+            <textarea id="sAddr" placeholder="Юридический адрес"></textarea>
+            <div class="grid">
+                <input id="sBin" placeholder="БИН / ИИН">
+                <input id="sIik" placeholder="ИИК (IBAN счет)">
+            </div>
+            <div class="grid">
+                <input id="sBank" placeholder="Название банка">
+                <input id="sBik" placeholder="БИК банка">
+            </div>
+            <input id="sKbe" placeholder="КБе (для Казахстана)">
+        </div>
 
-<div class="section">
-<h2>Продавец</h2>
-<input id="seller" placeholder="Название / ФИО">
-<textarea id="sellerDetails" placeholder="Реквизиты продавца"></textarea>
-  <div class="section">
-<h2>Продавец</h2>
-<input id="seller" placeholder="Название / ФИО">
-<textarea id="sellerDetails" placeholder="Реквизиты продавца"></textarea>
+        <div class="section">
+            <h2>🤝 Реквизиты Покупателя</h2>
+            <input id="bName" placeholder="Наименование Покупателя">
+            <textarea id="bAddr" placeholder="Адрес Покупателя"></textarea>
+            <input id="bBin" placeholder="БИН / ИИН покупателя">
+        </div>
 
-<!-- Новые поля для Казахстана -->
-<input id="sellerBin" placeholder="БИН / ИИН">
-<input id="sellerBank" placeholder="Банк">
-<input id="sellerBik" placeholder="БИК">
-<input id="sellerIik" placeholder="ИИК">
-<input id="sellerKbe" placeholder="КБе">
-</div>
+        <div class="section">
+            <h2>📦 Товары и услуги</h2>
+            <table id="itemsTable">
+                <thead>
+                    <tr>
+                        <th>Наименование</th>
+                        <th width="80">Кол-во</th>
+                        <th width="120">Цена</th>
+                        <th width="120">Сумма</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="itemsBody"></tbody>
+            </table>
+            <button class="btn btn-add" onclick="addRow()">+ Добавить позицию</button>
+        </div>
 
-<div class="section">
-<h2>Покупатель</h2>
-<input id="buyer" placeholder="Название / ФИО">
-<textarea id="buyerDetails" placeholder="Реквизиты покупателя"></textarea>
-<input id="sellerBin" placeholder="БИН / ИИН">
-<input id="sellerBank" placeholder="Банк">
-<input id="sellerBik" placeholder="БИК">
-<input id="sellerIik" placeholder="ИИК">
-<input id="sellerKbe" placeholder="КБе">
-</div>
-</div>
+        <div style="margin: 20px 0;">
+            <label style="cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="vatCheck" style="width: auto;" onchange="calc()"> Добавить НДС (12% РК / 20% РФ)
+            </label>
+        </div>
 
-<div class="section">
-<h2>Товары / Услуги</h2>
-<table id="items">
-<tr>
-<th>Наименование</th>
-<th>Кол-во</th>
-<th>Цена</th>
-<th>Сумма</th>
-<th>❌</th>
-</tr>
-</table>
-<br>
-<button onclick="addRow()">➕ Добавить строку</button>
-</div>
+        <div class="total-box">
+            <div>Сумма: <span id="baseSum">0</span> ₸/₽</div>
+            <div>НДС: <span id="vatSum">0</span> ₸/₽</div>
+            <div style="margin-top: 10px;"><strong>Итого к оплате: <span id="grandTotal">0</span> ₸/₽</strong></div>
+        </div>
 
-<label>
-<input type="checkbox" id="vatToggle"> Добавить НДС (16%)
-</label>
+        <button class="btn btn-main" onclick="window.print()">🖨️ Скачать счет в PDF / Печать</button>
+    </div>
 
-<div class="total">
-<br>
-Сумма: <span id="total">0</span> ₸<br>
-НДС: <span id="vat">0</span> ₸<br>
-<strong>Итого: <span id="grandTotal">0</span> ₸</strong>
-</div>
+    <div class="tools-grid">
+        <div class="tool-card">
+            <h3>📊 Быстрый расчет налога</h3>
+            <select id="taxRegion" onchange="calcTax()">
+                <option value="0.03">🇰🇿 Казахстан (Упрощенка 3%)</option>
+                <option value="0.06">🇷🇺 Россия (УСН Доходы 6%)</option>
+            </select>
+            <input type="number" id="revenue" placeholder="Сумма дохода" oninput="calcTax()">
+            <p>Налог к уплате: <strong id="taxRes">0</strong></p>
+        </div>
 
-<br>
-<button onclick="generatePDF()">📄 Скачать PDF</button>
-<div class="footer">
-  <script>
-function generatePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+        <div class="tool-card">
+            <h3>🔍 Проверка партнеров</h3>
+            <div class="check-links">
+                <a href="https://kgd.gov.kz/ru/services/taxpayer_search" target="_blank">🇰🇿 Поиск налогоплательщиков РК</a>
+                <a href="https://pb.nalog.ru/" target="_blank">🇷🇺 Прозрачный бизнес РФ (ФНС)</a>
+                <a href="https://stat.gov.kz/ru/juridical/search/" target="_blank">🇰🇿 Поиск компаний по БИН</a>
+            </div>
+        </div>
+    </div>
 
-  doc.setFontSize(14);
-  doc.text(`СЧЕТ НА ОПЛАТУ № ${invoiceNumber.value}`, 10, 15);
-  doc.text(`Дата: ${invoiceDate.value}`, 150, 15);
-
-  doc.setFontSize(12);
-  doc.text("Продавец:", 10, 30);
-  doc.text(seller.value || "-", 10, 38);
-  doc.text(sellerDetails.value || "-", 10, 46);
-
-  doc.text("Покупатель:", 10, 60);
-  doc.text(buyer.value || "-", 10, 68);
-  doc.text(buyerDetails.value || "-", 10, 76);
-
-  let y = 95;
-  document.querySelectorAll("#items tr").forEach((row, i) => {
-    if (i === 0) return;
-    const n = row.cells[0].querySelector("input").value;
-    const q = row.cells[1].querySelector("input").value;
-    const p = row.cells[2].querySelector("input").value;
-    if (n)
-      doc.text(`${n} — ${q} x ${p} ₸`, 10, y),
-      y += 8;
-  });
-
-  doc.text(`Итого: ${grandTotal.innerText} ₸`, 10, y + 10);
-
-  doc.save("schet-na-oplatu.pdf");
-}
-</script>
-}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-function generatePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  doc.text("Счет на оплату", 10, 10);
-  doc.save("test.pdf");
-}
-</script>
-  <a href="contacts.html">Контакты</a>
-  <a href="privacy.html">Политика конфиденциальности</a>
-  © 2026 Онлайн сервис формирования счетов
-</div>
+    <footer style="text-align: center; margin-top: 50px; color: #64748b; padding-bottom: 30px;">
+        <p>© 2026 Бесплатный сервис «Счет на оплату». Все права защищены.</p>
+        <a href="../index.html" style="color: var(--primary); text-decoration: none;">На главную страницу портала</a>
+    </footer>
 </div>
 
 <script>
-const invoiceNumber = document.getElementById("invoiceNumber");
-const invoiceDate = document.getElementById("invoiceDate");
+    // 1. Настройка номера и даты
+    let count = localStorage.getItem("inv_idx") || 1000;
+    count++;
+    localStorage.setItem("inv_idx", count);
+    document.getElementById("invNum").value = "Счет № " + count;
+    document.getElementById("invDate").valueAsDate = new Date();
 
-let num = localStorage.getItem("invoice") || 1000;
-num++;
-localStorage.setItem("invoice", num);
-invoiceNumber.value = "№ " + num;
-invoiceDate.valueAsDate = new Date();
+    // 2. Логика таблицы
+    function addRow() {
+        const row = document.getElementById("itemsBody").insertRow();
+        row.innerHTML = `
+            <td><input placeholder="Описание услуги"></td>
+            <td><input type="number" value="1" oninput="calc()"></td>
+            <td><input type="number" value="0" oninput="calc()"></td>
+            <td class="row-sum">0</td>
+            <td><button class="btn btn-remove" onclick="this.closest('tr').remove();calc()">×</button></td>
+        `;
+    }
+    addRow(); // Добавляем первую строку сразу
 
-function addRow(){
-  const row = items.insertRow();
-  row.innerHTML = `
-  <td><input></td>
-  <td><input type="number" value="1"></td>
-  <td><input type="number" value="0"></td>
-  <td class="sum">0</td>
-  <td><button class="remove" onclick="this.closest('tr').remove();calc()">✖</button></td>`;
-}
+    function calc() {
+        let total = 0;
+        document.querySelectorAll("#itemsBody tr").forEach(row => {
+            const q = parseFloat(row.cells[1].querySelector("input").value) || 0;
+            const p = parseFloat(row.cells[2].querySelector("input").value) || 0;
+            const s = q * p;
+            row.cells[3].innerText = s.toLocaleString();
+            total += s;
+        });
 
-addRow();
+        let vat = document.getElementById("vatCheck").checked ? (total * 0.12) : 0; // По умолчанию 12%
+        document.getElementById("baseSum").innerText = total.toLocaleString();
+        document.getElementById("vatSum").innerText = vat.toLocaleString();
+        document.getElementById("grandTotal").innerText = (total + vat).toLocaleString();
+    }
 
-document.addEventListener("input", calc);
-
-function calc(){
-  let total = 0;
-  document.querySelectorAll("#items tr").forEach((r,i)=>{
-    if(i===0) return;
-    const q = r.cells[1].querySelector("input").value;
-    const p = r.cells[2].querySelector("input").value;
-    const s = q*p;
-    r.cells[3].innerText = s;
-    total += s;
-  });
-  let vat = vatToggle.checked ? total*0.12 : 0;
-  totalSpan.innerText = total.toFixed(2);
-  vatSpan.innerText = vat.toFixed(2);
-  grandTotal.innerText = (total+vat).toFixed(2);
-}
-
-const totalSpan = total;
-const vatSpan = vat;
-
+    // 3. Калькулятор налогов
+    function calcTax() {
+        const rev = document.getElementById("revenue").value || 0;
+        const rate = document.getElementById("taxRegion").value;
+        const res = rev * rate;
+        document.getElementById("taxRes").innerText = res.toLocaleString() + (rate == "0.03" ? " ₸" : " ₽");
+    }
 </script>
+
 </body>
 </html>
