@@ -4,221 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Генератор счета на оплату онлайн 2026 — Бесплатно PDF (Казахстан и РФ)</title>
-    <meta name="description" content="Бесплатный сервис создания счетов на оплату. Онлайн генератор счета в PDF для ИП и ТОО. Актуальные реквизиты РК и РФ, расчет налогов и проверка БИН.">
-    <meta name="keywords" content="счет на оплату онлайн казахстан, генератор счета рф, выставить счет ип бесплатно, расчет налогов упрощенка">
+    <meta name="description" content="Бесплатный сервис создания счетов на оплату для ИП и ТОО. Актуальные реквизиты РК и РФ, расчет налогов и сохранение в PDF.">
     
     <style>
-        :root { --primary: #2563eb; --secondary: #10b981; --dark: #1e293b; --bg: #f8fafc; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--dark); margin: 0; padding: 0; }
+        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
         
-        header { background: white; border-bottom: 1px solid #e2e8f0; padding: 20px 0; text-align: center; }
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .header-top { background: #fff; padding: 20px; text-align: center; border-bottom: 1px solid #e2e8f0; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
         
-        .main-card { background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 40px; margin-bottom: 30px; }
-        h1 { font-size: 28px; margin-bottom: 10px; color: #0f172a; }
-        .subtitle { color: #64748b; margin-bottom: 30px; }
+        .invoice-card { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h1 { font-size: 24px; color: #0f172a; margin-bottom: 30px; text-align: center; }
 
-        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #f1f5f9; border-radius: 12px; }
-        .section h2 { font-size: 18px; margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .section { margin-bottom: 25px; padding: 15px; border: 1px solid #f1f5f9; border-radius: 10px; }
+        .section h2 { font-size: 16px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; pb: 5px; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+        input:focus { border-color: var(--primary); outline: none; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #f8fafc; padding: 10px; text-align: left; font-size: 12px; border-bottom: 2px solid #eee; }
+        td { padding: 8px; border-bottom: 1px solid #f1f5f9; }
+
+        .total-box { background: #f8fafc; padding: 20px; border-radius: 12px; text-align: right; margin-top: 20px; }
+        .total-box strong { font-size: 22px; color: var(--primary); }
+
+        .btn-main { background: var(--primary); color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .tools-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+        .tool-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
         
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th { background: #f8fafc; padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-size: 13px; }
-        td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
-
-        .btn { cursor: pointer; border: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
-        .btn-add { background: #f1f5f9; color: var(--dark); padding: 8px 15px; }
-        .btn-add:hover { background: #e2e8f0; }
-        .btn-main { background: var(--primary); color: white; width: 100%; padding: 18px; font-size: 18px; margin-top: 20px; }
-        .btn-main:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-remove { background: #fee2e2; color: #ef4444; width: 30px; height: 30px; border-radius: 50%; }
-
-        .total-box { text-align: right; margin-top: 20px; padding: 20px; background: #f8fafc; border-radius: 12px; }
-        .total-box strong { font-size: 24px; color: var(--primary); }
-
-        /* Виджеты инструментов */
-        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
-        .tool-card { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
-        .tool-card h3 { margin-top: 0; font-size: 16px; }
-
-        .check-links a { display: block; color: var(--primary); text-decoration: none; margin-bottom: 8px; font-size: 14px; }
-        .check-links a:hover { text-decoration: underline; }
-
         @media print {
-            .btn, .tools-grid, header, .subtitle, label, .btn-remove, .section h2 { display: none !important; }
+            .header-top, .btn-main, .tools-area, .section h2, button, .no-print { display: none !important; }
             body { background: white; padding: 0; }
-            .main-card { box-shadow: none; padding: 0; }
-            .section { border: none; padding: 0; margin-bottom: 20px; }
+            .invoice-card { box-shadow: none; padding: 0; }
             input, textarea { border: none !important; padding: 2px 0 !important; }
-            .grid { gap: 5px; }
         }
-
-        @media (max-width: 600px) { .grid, .tools-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<header>
+<div class="header-top">
     <h1>Генератор счета на оплату</h1>
-    <div class="subtitle">Быстрое создание профессиональных счетов для РК и РФ</div>
-</header>
+</div>
 
 <div class="container">
-    <div class="main-card">
+    <div class="invoice-card">
         <div class="section">
-            <h2>📄 Данные документа</h2>
+            <h2>Документ</h2>
             <div class="grid">
-                <input id="invNum" placeholder="Номер счета (напр. № 1066)">
+                <input id="invNum" placeholder="Номер счета">
                 <input id="invDate" type="date">
             </div>
         </div>
 
         <div class="section">
-            <h2>🏢 Реквизиты Продавца</h2>
-            <input id="sName" placeholder="Наименование организации или ФИО ИП">
-            <textarea id="sAddr" placeholder="Юридический адрес"></textarea>
+            <h2>Продавец</h2>
+            <input id="sName" placeholder="Название организации / ИП">
+            <textarea id="sAddr" placeholder="Адрес регистрации"></textarea>
             <div class="grid">
                 <input id="sBin" placeholder="БИН / ИИН">
                 <input id="sIik" placeholder="ИИК (IBAN счет)">
             </div>
             <div class="grid">
-                <input id="sBank" placeholder="Название банка">
-                <input id="sBik" placeholder="БИК банка">
+                <input id="sBank" placeholder="Банк">
+                <input id="sBik" placeholder="БИК">
             </div>
             <input id="sKbe" placeholder="КБе (для Казахстана)">
         </div>
 
         <div class="section">
-            <h2>🤝 Реквизиты Покупателя</h2>
-            <input id="bName" placeholder="Наименование Покупателя">
-            <textarea id="bAddr" placeholder="Адрес Покупателя"></textarea>
-            <input id="bBin" placeholder="БИН / ИИН покупателя">
+            <h2>Покупатель</h2>
+            <input id="bName" placeholder="Название Покупателя">
+            <textarea id="bAddr" placeholder="Реквизиты Покупателя (адрес, БИН)"></textarea>
         </div>
 
         <div class="section">
-            <h2>📦 Товары и услуги</h2>
+            <h2>Товары и услуги</h2>
             <table id="itemsTable">
                 <thead>
                     <tr>
-                        <th>Наименование</th>
-                        <th width="80">Кол-во</th>
-                        <th width="120">Цена</th>
-                        <th width="120">Сумма</th>
-                        <th></th>
+                        <th>Описание</th>
+                        <th width="60">Кол-во</th>
+                        <th width="100">Цена</th>
+                        <th width="100">Сумма</th>
+                        <th width="30" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody id="itemsBody"></tbody>
             </table>
-            <button class="btn btn-add" onclick="addRow()">+ Добавить позицию</button>
-        </div>
-
-        <div style="margin: 20px 0;">
-            <label style="cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 10px;">
-                <input type="checkbox" id="vatCheck" style="width: auto;" onchange="calc()"> Добавить НДС (12% РК / 20% РФ)
-            </label>
+            <button onclick="addRow()" style="margin-top:10px;" class="no-print">+ Добавить</button>
         </div>
 
         <div class="total-box">
-            <div>Сумма: <span id="baseSum">0</span> ₸/₽</div>
-            <div>НДС: <span id="vatSum">0</span> ₸/₽</div>
-            <div style="margin-top: 10px;"><strong>Итого к оплате: <span id="grandTotal">0</span> ₸/₽</strong></div>
+            <div>Сумма: <span id="baseSum">0</span></div>
+            <label class="no-print"><input type="checkbox" id="vatCheck" onchange="calc()"> НДС (12%)</label>
+            <div style="margin-top:10px;"><strong>Итого к оплате: <span id="grandTotal">0</span></strong></div>
         </div>
 
-        <button class="btn btn-main" onclick="window.print()">🖨️ Скачать счет в PDF / Печать</button>
+        <button class="btn-main" onclick="window.print()">📄 Скачать PDF / Печать</button>
     </div>
 
-    <div class="tools-grid">
+    <div class="tools-area">
         <div class="tool-card">
-            <h3>📊 Быстрый расчет налога</h3>
-            <select id="taxRegion" onchange="calcTax()">
-                <option value="0.03">🇰🇿 Казахстан (Упрощенка 3%)</option>
-                <option value="0.06">🇷🇺 Россия (УСН Доходы 6%)</option>
-            </select>
-            <input type="number" id="revenue" placeholder="Сумма дохода" oninput="calcTax()">
-            <p>Налог к уплате: <strong id="taxRes">0</strong></p>
-        </div>
-
-        <div class="tool-card">
-            <h3>🔍 Проверка партнеров</h3>
-            <div class="check-links">
-                <a href="https://kgd.gov.kz/ru/services/taxpayer_search" target="_blank">🇰🇿 Поиск налогоплательщиков РК</a>
-                <a href="https://pb.nalog.ru/" target="_blank">🇷🇺 Прозрачный бизнес РФ (ФНС)</a>
-                <a href="https://stat.gov.kz/ru/juridical/search/" target="_blank">🇰🇿 Поиск компаний по БИН</a>
+            <h3 id="rateTitle">🏦 Курсы валют</h3>
             </div>
+        <div class="tool-card">
+            <h3>📊 Налог (3% Упрощенка)</h3>
+            <input type="number" id="taxInp" placeholder="Доход" oninput="document.getElementById('taxOut').innerText = (this.value * 0.03).toFixed(2)">
+            <p>Налог: <strong id="taxOut">0</strong> ₸</p>
         </div>
     </div>
-
-    <footer style="text-align: center; margin-top: 50px; color: #64748b; padding-bottom: 30px;">
-        <p>© 2026 Бесплатный сервис «Счет на оплату». Все права защищены.</p>
-        <a href="../index.html" style="color: var(--primary); text-decoration: none;">На главную страницу портала</a>
-    </footer>
 </div>
 
 <script>
-    // 1. Твой старый код (номер счета, дата и расчеты)
-    let count = localStorage.getItem("inv_idx") || 1000;
+    // 1. Инициализация
+    let count = localStorage.getItem("inv_count") || 1066;
     count++;
-    localStorage.setItem("inv_idx", count);
-    document.getElementById("invNum").value = "Счет № " + count;
+    localStorage.setItem("inv_count", count);
+    document.getElementById("invNum").value = "№ " + count;
     document.getElementById("invDate").valueAsDate = new Date();
 
+    // 2. Строки товаров
     function addRow() {
         const row = document.getElementById("itemsBody").insertRow();
         row.innerHTML = `
-            <td><input placeholder="Описание услуги"></td>
+            <td><input placeholder="Услуга"></td>
             <td><input type="number" value="1" oninput="calc()"></td>
             <td><input type="number" value="0" oninput="calc()"></td>
-            <td class="row-sum">0</td>
-            <td><button class="btn btn-remove" onclick="this.closest('tr').remove();calc()">×</button></td>
+            <td class="res">0</td>
+            <td class="no-print"><button onclick="this.closest('tr').remove();calc()">×</button></td>
         `;
     }
     addRow();
 
     function calc() {
         let total = 0;
-        document.querySelectorAll("#itemsBody tr").forEach(row => {
-            const q = parseFloat(row.cells[1].querySelector("input").value) || 0;
-            const p = parseFloat(row.cells[2].querySelector("input").value) || 0;
+        document.querySelectorAll("#itemsBody tr").forEach(r => {
+            const q = r.cells[1].querySelector("input").value || 0;
+            const p = r.cells[2].querySelector("input").value || 0;
             const s = q * p;
-            row.cells[3].innerText = s.toLocaleString();
+            r.cells[3].innerText = s.toLocaleString();
             total += s;
         });
-        let vat = document.getElementById("vatCheck").checked ? (total * 0.12) : 0;
+        let vat = document.getElementById("vatCheck").checked ? total * 0.12 : 0;
         document.getElementById("baseSum").innerText = total.toLocaleString();
-        document.getElementById("vatSum").innerText = vat.toLocaleString();
         document.getElementById("grandTotal").innerText = (total + vat).toLocaleString();
     }
 
-    function calcTax() {
-        const rev = document.getElementById("revenue").value || 0;
-        const rate = document.getElementById("taxRegion").value;
-        const res = rev * rate;
-        document.getElementById("taxRes").innerText = res.toLocaleString() + (rate == "0.03" ? " ₸" : " ₽");
-    }
-
-    // --- ВОТ СЮДА МЫ ДОБАВИЛИ НОВЫЙ КОД КУРСОВ ---
+    // 3. КУРСЫ ВАЛЮТ (API)
     async function getRates() {
         try {
-            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            const data = await response.json();
-            const kzt = data.rates.KZT;
-            const rub = data.rates.RUB;
-            
-            const rateHtml = `
-                <div style="font-size: 14px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
-                    💵 1$ = ${kzt.toFixed(2)} ₸ | 1$ = ${rub.toFixed(2)} ₽
-                </div>
-            `;
-            // Ищем заголовок в карточке налогов и вставляем курс под него
-            document.querySelector('.tool-card h3').insertAdjacentHTML('afterend', rateHtml);
-        } catch (e) { console.log("Ошибка курсов"); }
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await res.json();
+            const html = `<div style="margin-top:10px; font-weight:bold;">
+                1$ = ${data.rates.KZT.toFixed(2)} ₸<br>
+                1$ = ${data.rates.RUB.toFixed(2)} ₽
+            </div>`;
+            document.getElementById('rateTitle').insertAdjacentHTML('afterend', html);
+        } catch (e) { console.log("Курсы не загрузились"); }
     }
     getRates();
-    // --------------------------------------------
-
 </script>
 
 </body>
